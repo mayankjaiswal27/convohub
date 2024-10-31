@@ -22,7 +22,7 @@ export const getUserImageSrc = (imagePath) => {
 };
 
 // Function to upload an image
-export const uploadImage = async (folderName, fileUri, isImage = true) => {
+export const uploadFile = async (folderName, fileUri, isImage = true) => {
   try {
     const fileName = getFilePath(folderName, isImage);
     const fileBase64 = await FileSystem.readAsStringAsync(fileUri, { encoding: FileSystem.EncodingType.Base64 });
@@ -55,4 +55,3 @@ export const uploadImage = async (folderName, fileUri, isImage = true) => {
 export const getFilePath = (folderName, isImage) => {
   return `${folderName}/${new Date().getTime()}${isImage ? '.png' : '.mp4'}`;
 };
-

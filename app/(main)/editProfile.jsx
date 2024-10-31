@@ -14,7 +14,7 @@ import Button from '../../components/Button';
 import { updateUser } from '../../services/userService';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadImage } from '../../services/imageService';
+import { uploadFile } from '../../services/imageService';
 const EditProfile = () => {
   const {user:currentUser,setUserData}=useAuth();
   const [loading,setLoading]=useState(false);
@@ -58,7 +58,7 @@ const EditProfile = () => {
     }
     setLoading(true);
     if(typeof image === 'object'){
-      let imageRes=await uploadImage('profiles',image?.uri,true);
+      let imageRes=await uploadFile('profiles',image?.uri,true);
       if(imageRes.success){
         userData.image=imageRes.data;
       }else{

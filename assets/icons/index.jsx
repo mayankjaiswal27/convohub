@@ -14,6 +14,8 @@ import Edit from './Edit'
 import Call from './Call'
 import Camera from './Camera'
 import Location from './Location'
+import Video from './Video'
+import Delete from './Delete'
 const icons={
   home:Home,
   image:Image,
@@ -28,6 +30,8 @@ const icons={
   call:Call,
   camera:Camera,
   location:Location,
+  video:Video,
+  delete:Delete,
 }
 const Icon= ({name,...props}) => {
   const IconComponent=icons[name];
