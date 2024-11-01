@@ -16,6 +16,9 @@ import Camera from './Camera'
 import Location from './Location'
 import Video from './Video'
 import Delete from './Delete'
+import ThreeDotsHorizontal from './ThreeDotsHorizontal'
+import Comment from './Comment'
+import Share from './Share'
 const icons={
   home:Home,
   image:Image,
@@ -32,6 +35,9 @@ const icons={
   location:Location,
   video:Video,
   delete:Delete,
+  threeDotsHorizontal: ThreeDotsHorizontal,
+  comment:Comment,
+  share:Share,
 }
 const Icon= ({name,...props}) => {
   const IconComponent=icons[name];

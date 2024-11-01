@@ -5,6 +5,9 @@ import { supabase } from '../lib/supabase';
 import { useRouter } from 'expo-router'
 import { getUserData } from '../services/userService'
 import { User } from '@supabase/supabase-js';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs(true);
 
 const _layout = () => {
   return (
