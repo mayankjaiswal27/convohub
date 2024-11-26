@@ -1,3 +1,4 @@
+
 import {StyleSheet,Text,View} from 'react-native'
 import React from 'react'
 import {useLocalSearchParams, useRouter} from 'expo-router'
@@ -160,6 +161,7 @@ const PostDetails=()=>{
 }
 
 export default PostDetails
-
 //css code
+
+
 

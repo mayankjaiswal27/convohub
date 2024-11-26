@@ -67,7 +67,6 @@ export const fetchPostDetails=async(postid)=>{
     const {data,error}=await supabase
     .from('posts')
     .select(`*
-
       ,user: users(id,name,image),
       postLikes(*),
       comments(*,users(id,name,image))
