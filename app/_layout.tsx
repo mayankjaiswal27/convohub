@@ -41,15 +41,7 @@ if(res.success){
 
 }
   return (
-    <Stack screenOptions={{ headerShown: false }} >
-      <Stack.Screen name='(main)/postDetails'
-      options={{
-        presentation: 'modal',
-      }}
-      >
-
-      </Stack.Screen>
-    </Stack>
+    <Stack screenOptions={{ headerShown: false }} />
   );
 }
 

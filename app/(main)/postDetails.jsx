@@ -4,8 +4,10 @@ import React from 'react'
 import {useLocalSearchParams, useRouter} from 'expo-router'
 import { useState, useEffect, useRef } from 'react';
 import { ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Loading, Postcard, Input, Icon } from '../components'; 
-import { supabase } from '../services/supabaseClient'
+import Loading from '../../components/Loading';
+import Postcard from '../../components/PostCard';
+import Input from '../../components/Input';
+import { supabase } from "../../lib/supabase";
 
 const PostDetails=()=>{
     const {postid} = useLocalSearchParams();
@@ -36,21 +38,21 @@ const PostDetails=()=>{
           .channel('comments')
           .on(
             'postgres_changes',
-            { event: 'INSERT', 
-                schema: 'public', 
+            { event: 'INSERT',
+                schema: 'public',
                 filter: `"postId"=eq.${postid}`,
                 table: 'comments' },
             (payload) => handleNewComment(payload)
           )
           .subscribe();
-    
+
         getPostDetails();
-    
+
         return () => {
           supabase.removeChannel(CommentChannel);
         };
       }, []);
-    
+
     const getPostDetails = async()=>{
         //fetch post details
         let res = await fetchPostDetails(postid);
@@ -60,7 +62,7 @@ const PostDetails=()=>{
             setStartLoading(false);
         }
     }
-    const onNewComment = ()=>{
+    const onNewComment = async ()=>{
         if(!commentRef.current) return null;
         let data ={
             userId:user?.id,
@@ -162,6 +164,3 @@ const PostDetails=()=>{
 
 export default PostDetails
 //css code
-
-
-
