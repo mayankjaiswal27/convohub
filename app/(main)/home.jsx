@@ -22,6 +22,7 @@ const Home = () => {
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
 
   const handlePostEvent = async (payload) => {
     try {
@@ -32,20 +33,22 @@ const Home = () => {
         setPosts((prevPosts) => [newPost, ...prevPosts]);
       }
     } catch (error) {
-      console.error("Error handling post event:", error);
+      console.error('Error handling post event:', error);
     }
   };
 
   const getPosts = async () => {
     setLoading(true);
     try {
-      limit = limit + 10;
+      if (!hasMore) return;
+      limit += 4;
       let res = await fetchPost(limit);
       if (res.success) {
+        if (posts.length === res.data.length) setHasMore(false);
         setPosts(res.data);
       }
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error('Error fetching posts:', error);
     } finally {
       setLoading(false);
     }
@@ -60,8 +63,6 @@ const Home = () => {
         (payload) => handlePostEvent(payload)
       )
       .subscribe();
-
-    getPosts();
 
     return () => {
       supabase.removeChannel(postChannel);
@@ -98,10 +99,21 @@ const Home = () => {
           renderItem={({ item }) => (
             <PostCard item={item} currentUser={user} router={router} />
           )}
+          onEndReached={() => {
+            getPosts();
+            console.log('onEndReached');
+          }}
+          onEndReachedThreshold={0}
           ListFooterComponent={
-            <View style={{ marginVertical: posts.length === 0 ? 200 : 30 }}>
-              {loading && <Loading />}
-            </View>
+            hasMore ? (
+              <View style={{ marginVertical: posts.length === 0 ? 200 : 30 }}>
+                {loading && <Loading />}
+              </View>
+            ) : (
+              <View style={{ marginVertical: 30 }} >
+                <Text style={styles.noPosts}>No more posts</Text>
+              </View>
+            )
           }
         />
       </View>
@@ -131,7 +143,6 @@ const styles = StyleSheet.create({
     height: hp(4.3),
     width: hp(4.3),
     borderRadius: theme.radius.sm,
-    borderCurve: 'continuous',
     borderColor: theme.colors.gray,
     borderWidth: 3,
   },
