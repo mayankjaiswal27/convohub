@@ -30,7 +30,8 @@ const PostCard = ({
   item,
   currentUser,
   router,
-  hasShadow=true
+  hasShadow=true,
+  showMoreIcon=true,
 }) => {
 
   const shadowStyles={
@@ -45,7 +46,8 @@ const PostCard = ({
 
   const created_at=moment(item?.created_at).format('MMM D');
   const openPostDetails=()=>{
-
+    if(!showMoreIcon) return null;
+    router.push(pathname:'postDetails',params:{postid:item?.id});
   }
   const liked=false;
   const likes=[];
@@ -62,11 +64,19 @@ const PostCard = ({
             <Text style={styles.username}>{item?.user?.name}</Text>
             <Text style={styles.postTime}>{created_at}</Text>
           </View>
+
         </View>
-        <TouchableOpacity onPress={openPostDetails}>
+        {/* <TouchableOpacity onPress={openPostDetails}>
           <Icon name="threeDotsHorizontal" size={hp(3.4)} color={theme.colors.text} strokeWidth={3}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
+      {
+            showMoreIcon && (
+              <TouchableOpacity onPress={openPostDetails}>
+                <Icon name="threeDotsHorizontal" size={hp(3.4)} color={theme.colors.text} strokeWidth={3}/>
+              </TouchableOpacity>
+            ) 
+          }
       <View style={styles.content}>
         <View style={styles.postBody}>
           {
